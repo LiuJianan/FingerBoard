@@ -10,6 +10,7 @@
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>Tuner</module>
+        <module>Bow</module>
     </modules>
 
     <properties>
@@ -64,6 +65,12 @@
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpasyncclient</artifactId>
                 <version>4.1.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty</artifactId>
+                <version>6.1.26</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

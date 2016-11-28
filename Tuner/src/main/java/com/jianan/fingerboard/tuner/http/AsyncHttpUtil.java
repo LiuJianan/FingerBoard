@@ -3,7 +3,6 @@ package com.jianan.fingerboard.tuner.http;
 import java.io.IOException;
 import java.util.concurrent.Future;
 
-import com.google.common.collect.Maps;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
@@ -37,7 +36,7 @@ public class AsyncHttpUtil {
     private static final int MAX_HOST = 20;
     private static final String APPLICATION_JSON = "application/json";
     private static final String TEXT_JSON = "text/json";
-    private static final String UTF = "text/json";
+    private static final String UTF_CODE = "utf-8";
 
     private static RequestConfig config;
     private static CloseableHttpAsyncClient httpclient;
@@ -98,7 +97,7 @@ public class AsyncHttpUtil {
             httpPost.setHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON);
 
             String json = JsonUtil.serialize(object);
-            StringEntity entity = new StringEntity(json, "utf-8");
+            StringEntity entity = new StringEntity(json, UTF_CODE);
             entity.setContentType(TEXT_JSON);
             httpPost.setEntity(entity);
             Future<HttpResponse> httpResponseFuture = httpclient.execute(httpPost, new FutureCallback<HttpResponse>() {

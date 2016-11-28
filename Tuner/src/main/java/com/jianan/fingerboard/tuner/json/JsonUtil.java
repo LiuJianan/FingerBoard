@@ -16,8 +16,8 @@ import java.io.IOException;
  * @author by jianan.liu on 16/11/20.
  */
 public class JsonUtil {
-    private static final ObjectMapper mapper = new ObjectMapper();
     private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class);
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     static {
         mapper.disable(SerializationFeature.INDENT_OUTPUT);
