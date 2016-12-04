@@ -1,11 +1,9 @@
 package com.jianan.fingerboard.bow.server;
 
-import com.jianan.fingerboard.tuner.http.AsyncHttpUtil;
-import org.apache.http.util.ExceptionUtils;
+import java.util.concurrent.Executors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.Executors;
 
 /**
  * Main server start

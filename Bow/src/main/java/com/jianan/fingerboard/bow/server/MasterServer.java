@@ -1,5 +1,7 @@
 package com.jianan.fingerboard.bow.server;
 
+import com.jianan.fingerboard.bow.spring.SpringBeanFactory;
+import com.jianan.fingerboard.bow.store.DataStoreHandler;
 import com.jianan.fingerboard.bow.web.HttpServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +19,11 @@ public class MasterServer implements Runnable {
     }
 
     public void run() {
-        logger.info("start master");
+        logger.info("start master -------");
+        //spring
+        SpringBeanFactory springBeanFactory = SpringBeanFactory.buildInit();
+        //data store
+        // http
         HttpServer httpServer = new HttpServer("127.0.0.1", 55522);
         httpServer.start();
     }
