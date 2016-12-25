@@ -28,6 +28,8 @@
         <!-- 1000 * 60 * 30  连接在池中保持空闲而不被空闲连接回收器线程-->
         <property name="minEvictableIdleTimeMillis" value="10000"/>
         <property name="validationQuery" value="SELECT 1"/>
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat" />
     </bean>
 
     <!-- ========================= DBCP数据源 ========================== -->

@@ -1,0 +1,9 @@
+syntax = "proto3";
+package com.jianan.fingerboard.tuner;
+option java_package="com.jianan.fingerboard.tuner.bean";
+option java_outer_classname="CountryItem";
+
+message Country {
+     bytes nameZh = 1;
+     string code = 2;
+}

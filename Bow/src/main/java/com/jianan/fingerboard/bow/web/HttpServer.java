@@ -4,8 +4,6 @@ import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
 
-import com.alibaba.druid.support.http.StatViewServlet;
-import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
@@ -16,8 +14,8 @@ import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import com.jianan.fingerboard.tuner.http.AsyncHttpUtil;
 
 /**
  * @author by jianan.liu on 16/11/27.
