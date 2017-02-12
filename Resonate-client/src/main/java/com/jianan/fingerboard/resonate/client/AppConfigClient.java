@@ -1,6 +1,5 @@
-package com.jianan.fingerborad.resonate.config.client;
+package com.jianan.fingerboard.resonate.client;
 
-import com.jianan.fingerborad.resonate.config.server.AppConfigServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableAutoConfiguration
 @RefreshScope
 public class AppConfigClient {
-    @Value("${config.test.name:world}")
+    @Value("${configTestName:world}")
     String bar;
 
     @RequestMapping("/")
@@ -32,10 +31,10 @@ public class AppConfigClient {
     @Autowired
     void setEnviroment(Environment env) {
         System.out.println("my-config.appName from env: "
-                + env.getProperty("config.test.name"));
+                + env.getProperty("configTestName"));
     }
     public static void main(String[] args) {
-        Class[] classes = new Class[] {AppConfigServer.class, AppConfigClient.class};
+        Class[] classes = new Class[] {AppConfigClient.class};
         SpringApplication.run(classes, args);
     }
 }

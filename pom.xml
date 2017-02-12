@@ -17,6 +17,7 @@
         <module>Tuner</module>
         <module>Bow</module>
         <module>Resonate</module>
+        <module>Resonate-client</module>
     </modules>
 
     <properties>

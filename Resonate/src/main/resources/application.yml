@@ -12,7 +12,3 @@ spring:
           searchPaths: Resonate/src/main/profile/dev
 logging:
   level: debug
-endpoints:
-  jmx:
-    unique-names: true
-
