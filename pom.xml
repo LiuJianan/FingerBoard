@@ -3,6 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <!--<parent>-->
+    <!--<groupId>org.springframework.boot</groupId>-->
+    <!--<artifactId>spring-boot-starter-parent</artifactId>-->
+    <!--<version>1.4.0.RELEASE</version>-->
+    <!--</parent>-->
 
     <groupId>FingerBoard</groupId>
     <artifactId>fingerboard-parent</artifactId>
@@ -11,6 +16,7 @@
     <modules>
         <module>Tuner</module>
         <module>Bow</module>
+        <module>Resonate</module>
     </modules>
 
     <properties>
@@ -22,6 +28,23 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--<dependency>-->
+                <!--&lt;!&ndash; Import dependency management from Spring Boot &ndash;&gt;-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-dependencies</artifactId>-->
+                <!--<version>1.4.0.RELEASE</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
+
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.cloud</groupId>-->
+                <!--<artifactId>spring-cloud-dependencies</artifactId>-->
+                <!--<version>Camden.SR5</version>-->
+                <!--<type>pom</type>-->
+                <!--<scope>import</scope>-->
+            <!--</dependency>-->
+
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -140,37 +163,19 @@
                 <artifactId>druid</artifactId>
                 <version>1.0.17</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>4.1.4.Final</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
-
     <repositories>
         <repository>
-            <id>central</id>
-            <url>http://repo1.maven.org/maven2</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>apache</id>
-            <url>https://repository.apache.org/content/groups/public/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
+            <id>alimaven</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
         </repository>
     </repositories>
 </project>

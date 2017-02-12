@@ -83,4 +83,9 @@ public class SyncHttpUtil {
         return null;
     }
 
+    public static void main(String[] args) {
+        String s = get("http://et.airchina.com.cn/FareFamily/domestic/zh_CN/FFDomestic1.shtml");
+        System.out.println(s);
+    }
+
 }
