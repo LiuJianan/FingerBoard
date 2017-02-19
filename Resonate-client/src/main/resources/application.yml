@@ -1,9 +1,0 @@
-server:
-  port: 9091
-
-spring:
-  cloud:
-    name: resonate-client
-    profile: dev
-logging:
-  level: debug
