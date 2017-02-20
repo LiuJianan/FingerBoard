@@ -17,6 +17,6 @@ public class ServiceConsumerController {
 
     @RequestMapping("/addClient")
     public String addClient() {
-        return appClientService.add("a", "b");
+        return appClientService.add("c", "b");
     }
 }
