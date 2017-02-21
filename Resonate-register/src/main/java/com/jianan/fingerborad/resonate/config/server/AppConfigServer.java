@@ -10,7 +10,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 @EnableConfigServer
 @SpringBootApplication
 public class AppConfigServer {
-    public static void main(String[] args) {
-        SpringApplication.run(AppConfigServer.class, args).getEnvironment();
-    }
+//    public static void main(String[] args) {
+//        SpringApplication.run(AppConfigServer.class, args).getEnvironment();
+//    }
 }

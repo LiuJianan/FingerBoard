@@ -29,8 +29,8 @@ public class AppConfigClient {
         System.out.println("my-config.appName from env: "
                 + env.getProperty("configTestName"));
     }
-    public static void main(String[] args) {
-        Class[] classes = new Class[] {AppConfigClient.class};
-        SpringApplication.run(classes, args);
-    }
+//    public static void main(String[] args) {
+//        Class[] classes = new Class[] {AppConfigClient.class};
+//        SpringApplication.run(classes, args);
+//    }
 }
