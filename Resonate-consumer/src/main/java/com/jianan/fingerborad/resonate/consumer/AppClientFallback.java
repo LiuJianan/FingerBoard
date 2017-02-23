@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AppClientFallback implements IAppClientService {
     @Override
     public String add(@RequestParam(value = "a") String a, @RequestParam(value = "b") String b) {
-        return "ERROR";
+        return "ERROR!";
     }
 }
