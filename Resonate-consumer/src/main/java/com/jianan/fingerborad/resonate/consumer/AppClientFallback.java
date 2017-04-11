@@ -12,4 +12,9 @@ public class AppClientFallback implements IAppClientService {
     public String add(@RequestParam(value = "a") String a, @RequestParam(value = "b") String b) {
         return "ERROR!";
     }
+
+    @Override
+    public String query(@RequestParam(value = "name") String name) {
+        return null;
+    }
 }

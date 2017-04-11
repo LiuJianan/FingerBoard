@@ -12,4 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface IAppClientService {
     @RequestMapping(method = RequestMethod.GET, value = "/add")
     String add(@RequestParam(value = "a") String a, @RequestParam(value = "b") String b);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/query")
+    String query(@RequestParam(value = "name") String name);
+
 }

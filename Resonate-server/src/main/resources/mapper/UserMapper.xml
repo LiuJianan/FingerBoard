@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jianan.fingerboard.resonate.server.dao.mapper.UserDao">
+    <resultMap id="BaseResultMap" type="com.jianan.fingerboard.resonate.server.bean.User">
+        <result column="user_name" property="userName" />
+        <result column="gender" property="gender" />
+    </resultMap>
+
+    <parameterMap id="User" type="com.jianan.fingerboard.resonate.server.bean.User"/>
+
+    <sql id="Base_Column_List">
+        user_name, gender
+    </sql>
+
+    <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where user_name = #{userName}
+    </select>
+
+</mapper>
