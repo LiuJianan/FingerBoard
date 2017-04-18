@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author by jianan.liu on 17/2/19.
  */
 @RestController
+@RequestMapping("/provider/service")
 public class ServiceProviderController {
 
     @Resource
@@ -31,5 +34,12 @@ public class ServiceProviderController {
     public String query(@RequestParam String name) {
         User user = providerService.query(name);
         return JsonUtil.serialize(user);
+    }
+
+    @RequestMapping("/wait")
+    public void wait(HttpServletRequest request, HttpServletResponse response) {
+        long start = System.currentTimeMillis();
+        response.setHeader("charset", "abc");
+        return;
     }
 }

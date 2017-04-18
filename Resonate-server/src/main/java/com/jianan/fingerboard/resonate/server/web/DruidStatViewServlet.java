@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import com.alibaba.druid.support.http.StatViewServlet;
 
 /**
- * @author liujianan
+ * @author jianan.liu
  */
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = "/druid/*",

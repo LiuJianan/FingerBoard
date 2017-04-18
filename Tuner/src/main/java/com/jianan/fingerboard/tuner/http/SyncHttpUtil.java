@@ -51,20 +51,24 @@ public class SyncHttpUtil {
     }
 
     public static String get(String url) {
+        HttpEntity entity = null;
         try {
             HttpGet httpGet = new HttpGet(url);
             HttpResponse response = client.execute(httpGet);
-            HttpEntity entity = response.getEntity();
+            entity = response.getEntity();
             if (entity != null) {
-                return EntityUtils.toString(entity);
+                return EntityUtils.toString(entity, UTF_CODE);
             }
         } catch (Exception e) {
             logger.error("http get error for url: {}", url, e);
+        } finally {
+            EntityUtils.consumeQuietly(entity);
         }
         return null;
     }
 
-    public static String post (String url, Object o){
+    public static String post(String url, Object o) {
+        HttpEntity entity = null;
         try {
             HttpPost post = new HttpPost(url);
             post.setHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON);
@@ -73,19 +77,15 @@ public class SyncHttpUtil {
             stringEntry.setContentType(TEXT_JSON);
             post.setEntity(stringEntry);
             HttpResponse response = client.execute(post);
-            HttpEntity entity = response.getEntity();
+            entity = response.getEntity();
             if (entity != null) {
                 return EntityUtils.toString(entity);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("http post error for url: {} data: {}", url, o, e);
+        } finally {
+            EntityUtils.consumeQuietly(entity);
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        String s = get("http://et.airchina.com.cn/FareFamily/domestic/zh_CN/FFDomestic1.shtml");
-        System.out.println(s);
-    }
-
 }
