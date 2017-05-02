@@ -2,11 +2,15 @@ package com.jianan.fingerborad.resonate.register.zk;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import com.google.common.collect.Lists;
 import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.leader.LeaderSelector;
 import org.apache.curator.framework.recipes.leader.LeaderSelectorListenerAdapter;
 import org.slf4j.Logger;
@@ -27,16 +31,22 @@ public class LeaderSelectManager extends LeaderSelectorListenerAdapter implement
 
     @Resource
     private ZkClient zkClient;
+    private AtomicBoolean releaseFlag = new AtomicBoolean(false);
 
     @PostConstruct
     private void init() {
         leaderSelector = new LeaderSelector(zkClient.getClient(), LEADER_ELECT_PATH, this);
+        leaderSelector.autoRequeue();
     }
 
     @Override
     public void takeLeadership(CuratorFramework client) throws Exception {
         String serviceId = discoveryClient.getLocalServiceInstance().getServiceId();
         logger.info("take leadership {}", serviceId);
+        while (!releaseFlag.get()){
+
+        }
+        logger.info("release leadership {}", serviceId);
     }
 
     @Override
@@ -47,5 +57,9 @@ public class LeaderSelectManager extends LeaderSelectorListenerAdapter implement
     public void start() {
         logger.info("start leader selector....");
         leaderSelector.start();
+    }
+
+    public void releaseLeaderShip(){
+        releaseFlag.set(true);
     }
 }

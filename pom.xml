@@ -28,7 +28,8 @@
         <spring.version>4.3.3.RELEASE</spring.version>
         <jetty.version>9.2.19.v20160908</jetty.version>
         <mybatis-spring-boot>1.2.0</mybatis-spring-boot>
-        <curator-version>3.3.0</curator-version>
+        <curator-version>2.12.0</curator-version>
+        <zk-version>3.4.9</zk-version>
     </properties>
 
     <dependencyManagement>
@@ -186,7 +187,7 @@
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.4</version>
+                <version>4.12</version>
             </dependency>
 
             <dependency>
@@ -204,6 +205,12 @@
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-framework</artifactId>
                 <version>${curator-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zk-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

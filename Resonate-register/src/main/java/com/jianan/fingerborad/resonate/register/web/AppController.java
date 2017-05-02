@@ -38,4 +38,10 @@ public class AppController {
         leaderSelectManager.start();
         return "OK";
     }
+
+    @RequestMapping("/leader/release")
+    public Object release() {
+        leaderSelectManager.releaseLeaderShip();
+        return "OK";
+    }
 }

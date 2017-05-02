@@ -1,10 +1,17 @@
 package com.jianan.fingerborad.resonate.register.zk;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.curator.shaded.com.google.common.base.Preconditions;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.ZooDefs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,10 +37,92 @@ public class ZkClient {
     void init() {
         logger.info("zookeeper.address {}", address);
         zkClient = CuratorFrameworkFactory.newClient(address, new ExponentialBackoffRetry(500, 3));
+        zkClient.start();
+    }
+
+    /**
+     * check path if exit
+     * 
+     * @param path
+     * @return
+     */
+    public boolean exit(String path) {
+        try {
+            Preconditions.checkArgument(StringUtils.isNotEmpty(path), "path empty");
+            return zkClient.checkExists().forPath(path) != null;
+        } catch (Exception e) {
+            logger.error("exit zk path error. path: {}", path, e);
+            return false;
+        }
+    }
+
+
+    /**
+     * create path
+     *
+     * @param path
+     * @return
+     * @throws Exception
+     */
+    public boolean create(String path) throws Exception {
+        return create(path, true);
+    }
+
+
+    /**
+     * create path
+     * 
+     * @param path
+     * @param persistent
+     * @return
+     * @throws Exception
+     */
+    public boolean create(String path, boolean persistent) throws Exception {
+        CreateMode mode = persistent ? CreateMode.PERSISTENT : CreateMode.EPHEMERAL;
+        return create(path, mode);
+    }
+
+    /**
+     * create path with mode
+     * 
+     * @param path
+     * @param mode
+     * @return
+     * @throws Exception
+     */
+    public boolean create(String path, CreateMode mode) throws Exception {
+        try {
+            Preconditions.checkArgument(StringUtils.isNotEmpty(path), "path empty");
+            zkClient.create().creatingParentsIfNeeded().withMode(mode).withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE)
+                    .forPath(path);
+            return true;
+        } catch (KeeperException.NodeExistsException ne) {
+            logger.warn("path has exit, path: {}", path);
+            return true;
+        } catch (Exception e) {
+            logger.error("exit zk path error. path: {}", path, e);
+            throw e;
+        }
+    }
+
+    /**
+     * get data from path
+     * 
+     * @param path
+     * @return
+     */
+    public String get(String path) {
+        try {
+            byte[] bytes = zkClient.getData().forPath(path);
+            String str = new String(bytes, Charset.forName("utf-8"));
+            return str;
+        } catch (Exception e) {
+            logger.error("get from path error, path: {}", path, e);
+            return null;
+        }
     }
 
     public CuratorFramework getClient() {
         return zkClient;
     }
-
 }
