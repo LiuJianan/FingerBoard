@@ -1,12 +1,15 @@
 package com.jianan.fingerborad.resonate.register.zk;
 
 import java.nio.charset.Charset;
+import java.util.concurrent.CountDownLatch;
 
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.framework.state.ConnectionState;
+import org.apache.curator.framework.state.ConnectionStateListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.shaded.com.google.common.base.Preconditions;
 import org.apache.zookeeper.CreateMode;
@@ -38,6 +41,14 @@ public class ZkClient {
         logger.info("zookeeper.address {}", address);
         zkClient = CuratorFrameworkFactory.newClient(address, new ExponentialBackoffRetry(500, 3));
         zkClient.start();
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                zkClient.close();
+            }
+        });
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+        waitConnected(countDownLatch);
     }
 
     /**
@@ -56,7 +67,6 @@ public class ZkClient {
         }
     }
 
-
     /**
      * create path
      *
@@ -67,7 +77,6 @@ public class ZkClient {
     public boolean create(String path) throws Exception {
         return create(path, true);
     }
-
 
     /**
      * create path
@@ -124,5 +133,34 @@ public class ZkClient {
 
     public CuratorFramework getClient() {
         return zkClient;
+    }
+
+    private void waitConnected(CountDownLatch countDownLatch) {
+        zkClient.getConnectionStateListenable().addListener(new ConnectedListener(countDownLatch));
+    }
+
+    /**
+     * listener for connected
+     */
+    public static class ConnectedListener implements ConnectionStateListener {
+        private CountDownLatch latch;
+
+        public ConnectedListener(CountDownLatch latch) {
+            this.latch = latch;
+        }
+
+        @Override
+        public void stateChanged(CuratorFramework client, ConnectionState newState) {
+            if (newState == ConnectionState.CONNECTED) {
+                latch.countDown();
+                logger.info("zk client connected OK");
+            } else if (newState == ConnectionState.SUSPENDED) {
+                logger.info("zk SUSPENDED");
+            } else if (newState == ConnectionState.LOST) {
+                logger.info("zk LOST");
+            } else if (newState == ConnectionState.RECONNECTED) {
+                logger.info("zk RECONNECTED");
+            }
+        }
     }
 }

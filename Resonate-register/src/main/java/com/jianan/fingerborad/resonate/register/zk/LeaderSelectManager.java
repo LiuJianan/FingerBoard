@@ -25,13 +25,12 @@ import org.springframework.stereotype.Component;
 public class LeaderSelectManager extends LeaderSelectorListenerAdapter implements Closeable {
     private static final Logger logger = LoggerFactory.getLogger(LeaderSelectManager.class);
     private static final String LEADER_ELECT_PATH = "/fingerborad/resonate/register/leader";
+    private AtomicBoolean releaseFlag = new AtomicBoolean(false);
     private LeaderSelector leaderSelector;
     @Resource
     private DiscoveryClient discoveryClient;
-
     @Resource
     private ZkClient zkClient;
-    private AtomicBoolean releaseFlag = new AtomicBoolean(false);
 
     @PostConstruct
     private void init() {
@@ -47,6 +46,7 @@ public class LeaderSelectManager extends LeaderSelectorListenerAdapter implement
 
         }
         logger.info("release leadership {}", serviceId);
+        releaseFlag.set(false);
     }
 
     @Override

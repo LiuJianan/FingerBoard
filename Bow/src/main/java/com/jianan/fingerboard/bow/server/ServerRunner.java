@@ -13,6 +13,17 @@ import org.slf4j.LoggerFactory;
 public class ServerRunner {
     private static final Logger logger = LoggerFactory.getLogger(ServerRunner.class);
 
+    static {
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                if (logger.isInfoEnabled()) {
+                    logger.info("Run shutdown hook now.");
+                }
+                // TODO: 17/5/2  close all
+            }
+        }, "BowShutdownHook"));
+    }
+
     /**
      * start runner for manager
      *

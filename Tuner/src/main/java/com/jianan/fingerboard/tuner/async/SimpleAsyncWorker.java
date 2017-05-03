@@ -5,6 +5,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 /**
  * @author by jianan.liu on 17/3/30.
  */
@@ -43,17 +45,25 @@ public class SimpleAsyncWorker {
     }
 
     private ExecutorService createCommon(int coreSize, int maxSize) {
-        ExecutorService executorService = new ThreadPoolExecutor(//
+        ThreadPoolExecutor executorService = new ThreadPoolExecutor(//
                 coreSize, //
                 maxSize, //
                 1000 * 60, TimeUnit.MILLISECONDS, //
-                new LinkedBlockingQueue<Runnable>());
+                new LinkedBlockingQueue<Runnable>(),
+                new ThreadFactoryBuilder().setNameFormat("common-task-%d").build());
+        executorService.prestartAllCoreThreads();
         return executorService;
     }
 
     private ExecutorService createLimit(int coreSize, int maxSize, int queueSize) {
-        ExecutorService executorService = new ThreadPoolExecutor(coreSize, maxSize, 1000 * 60, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>(queueSize));
+        ThreadPoolExecutor executorService = new ThreadPoolExecutor(
+                coreSize,//
+                maxSize,//
+                1000 * 60, //
+                TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<Runnable>(queueSize),
+                new ThreadFactoryBuilder().setNameFormat("limit-task-%d").build());
+        executorService.prestartAllCoreThreads();
         return executorService;
     }
 
